@@ -1,0 +1,30 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: aws-es-auth-proxy
+  namespace: aws-es-auth-proxy
+  labels:
+    name: aws-es-auth-proxy
+    role: web
+spec:
+  minReadySeconds: 30
+  strategy:
+    type: RollingUpdate
+  replicas: 1
+  template:
+    metadata:
+      name: aws-es-auth-proxy
+      labels:
+        name: aws-es-auth-proxy
+        role: web
+    spec:
+      containers:
+      - image: quay.io/wantedly/aws-es-auth-proxy:latest # Deployment image. e.g.
+          ruby:2.3.1-slim
+        name: aws-es-auth-proxy
+        ports:
+        - containerPort: 3000 # Deployment containerPort (Opened Port)
+        env:
+        - name: key # e.g. RACK_ENV
+          value: value # e.g. production
