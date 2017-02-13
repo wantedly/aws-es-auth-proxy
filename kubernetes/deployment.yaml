@@ -1,0 +1,81 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: aws-es-auth-proxy
+  namespace: aws-es-auth-proxy
+  labels:
+    name: aws-es-auth-proxy
+    role: web
+spec:
+  minReadySeconds: 30
+  strategy:
+    type: RollingUpdate
+  replicas: 1
+  template:
+    metadata:
+      name: aws-es-auth-proxy
+      labels:
+        name: aws-es-auth-proxy
+        role: web
+    spec:
+      containers:
+      - image: quay.io/coreos/aws-auth-proxy
+        name: aws-auth-proxy
+        ports:
+        - containerPort: 9200 # Deployment containerPort (Opened Port)
+        env:
+        - name: AWS_AUTH_PROXY_SERVICE_NAME
+          valueFrom:
+            secretKeyRef:
+              - name: dotenv
+                key: aws-auth-proxy-service-name
+        - name: AWS_AUTH_PROXY_RGEION_NAME
+          valueFrom:
+            secretKeyRef:
+              - name: dotenv
+                key: aws-auth-proxy-region-name
+        - name: AWS_AUTH_PROXY_UPSTREAM_HOST
+          valueFrom:
+            secretKeyRef:
+              - name: dotenv
+                key: aws-auth-proxy-upstream-host
+        - name: AWS_AUTH_PROXY_UPSTREAM_SCHEME
+          valueFrom:
+            secretKeyRef:
+              - name: dotenv
+                key: aws-auth-proxy-upstream-scheme
+        - name: AWS_AUTH_PROXY_LISTEN_ADDRESS
+          value: ":9200"
+        - name: AWS_AUTH_PROXY_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              - name: dotenv
+                key: aws-auth-proxy-access-key
+        - name: AWS_AUTH_PROXY_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              - name: dotenv
+                key: aws-auth-proxy-secret-ke
+      - image: quay.io/dtan4/nginx-basic-auth-proxy
+        name: aws-auth-proxy
+        ports:
+        - containerPort: 80
+        env:
+        - name: BASIC_AUTH_USERNAME
+          valueFrom:
+            secretKeyRef:
+              - name: dotenv
+                key: basic-auth-username
+        - name: BASIC_AUTH_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              - name: dotenv
+                key: basic-auth-password
+        - name: PROXY_PASS
+          value: http://localhost:9200/
+        - name: SERVER_NAME
+          valueFrom:
+            secretKeyRef:
+              - name: dotenv
+                key: server-name
