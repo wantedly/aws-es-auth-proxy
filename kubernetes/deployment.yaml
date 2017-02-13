@@ -58,7 +58,7 @@ spec:
               name: dotenv
               key: aws-auth-proxy-secret-ke
       - image: quay.io/dtan4/nginx-basic-auth-proxy
-        name: aws-auth-proxy
+        name: nginx-basic-auth-proxy
         ports:
         - containerPort: 80
         env:
