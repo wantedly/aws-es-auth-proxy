@@ -30,7 +30,7 @@ spec:
             secretKeyRef:
               name: dotenv
               key: aws-auth-proxy-service-name
-        - name: AWS_AUTH_PROXY_RGEION_NAME
+        - name: AWS_AUTH_PROXY_REGION_NAME
           valueFrom:
             secretKeyRef:
               name: dotenv
