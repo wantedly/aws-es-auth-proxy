@@ -28,35 +28,35 @@ spec:
         - name: AWS_AUTH_PROXY_SERVICE_NAME
           valueFrom:
             secretKeyRef:
-              - name: dotenv
-                key: aws-auth-proxy-service-name
+              name: dotenv
+              key: aws-auth-proxy-service-name
         - name: AWS_AUTH_PROXY_RGEION_NAME
           valueFrom:
             secretKeyRef:
-              - name: dotenv
-                key: aws-auth-proxy-region-name
+              name: dotenv
+              key: aws-auth-proxy-region-name
         - name: AWS_AUTH_PROXY_UPSTREAM_HOST
           valueFrom:
             secretKeyRef:
-              - name: dotenv
-                key: aws-auth-proxy-upstream-host
+              name: dotenv
+              key: aws-auth-proxy-upstream-host
         - name: AWS_AUTH_PROXY_UPSTREAM_SCHEME
           valueFrom:
             secretKeyRef:
-              - name: dotenv
-                key: aws-auth-proxy-upstream-scheme
+              name: dotenv
+              key: aws-auth-proxy-upstream-scheme
         - name: AWS_AUTH_PROXY_LISTEN_ADDRESS
           value: ":9200"
         - name: AWS_AUTH_PROXY_ACCESS_KEY
           valueFrom:
             secretKeyRef:
-              - name: dotenv
-                key: aws-auth-proxy-access-key
+              name: dotenv
+              key: aws-auth-proxy-access-key
         - name: AWS_AUTH_PROXY_SECRET_KEY
           valueFrom:
             secretKeyRef:
-              - name: dotenv
-                key: aws-auth-proxy-secret-ke
+              name: dotenv
+              key: aws-auth-proxy-secret-ke
       - image: quay.io/dtan4/nginx-basic-auth-proxy
         name: aws-auth-proxy
         ports:
@@ -65,17 +65,17 @@ spec:
         - name: BASIC_AUTH_USERNAME
           valueFrom:
             secretKeyRef:
-              - name: dotenv
-                key: basic-auth-username
+              name: dotenv
+              key: basic-auth-username
         - name: BASIC_AUTH_PASSWORD
           valueFrom:
             secretKeyRef:
-              - name: dotenv
-                key: basic-auth-password
+              name: dotenv
+              key: basic-auth-password
         - name: PROXY_PASS
           value: http://localhost:9200/
         - name: SERVER_NAME
           valueFrom:
             secretKeyRef:
-              - name: dotenv
-                key: server-name
+              name: dotenv
+              key: server-name
