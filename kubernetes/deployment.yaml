@@ -56,7 +56,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: dotenv
-              key: aws-auth-proxy-secret-ke
+              key: aws-auth-proxy-secret-key
       - image: quay.io/dtan4/nginx-basic-auth-proxy
         name: nginx-basic-auth-proxy
         ports:
