@@ -11,7 +11,7 @@ spec:
   ports:
   - port: 443 # Service opened port.
     protocol: TCP
-    targetPort: 3000 # Endpoint of Pod
+    targetPort: 80
   selector:
     name: aws-es-auth-proxy
     role: web
