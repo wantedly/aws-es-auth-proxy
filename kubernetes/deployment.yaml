@@ -20,43 +20,36 @@ spec:
         role: web
     spec:
       containers:
-      - image: quay.io/coreos/aws-auth-proxy
-        name: aws-auth-proxy
+      - image: quay.io/dtan4/aws-sign-proxy
+        name: aws-signing-proxy
         ports:
-        - containerPort: 9200 # Deployment containerPort (Opened Port)
+        - containerPort: 8080
         env:
-        - name: AWS_AUTH_PROXY_SERVICE_NAME
+        - name: AWS_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:
               name: dotenv
-              key: aws-auth-proxy-service-name
-        - name: AWS_AUTH_PROXY_REGION_NAME
+              key: aws-access-key-id
+        - name: AWS_SECRET_ACCESS_KEY
           valueFrom:
             secretKeyRef:
               name: dotenv
-              key: aws-auth-proxy-region-name
-        - name: AWS_AUTH_PROXY_UPSTREAM_HOST
+              key: aws-secret-access-key
+        - name: AWS_REGION
           valueFrom:
             secretKeyRef:
               name: dotenv
-              key: aws-auth-proxy-upstream-host
-        - name: AWS_AUTH_PROXY_UPSTREAM_SCHEME
+              key: aws-region
+        - name: AWS_SIGN_PROXY_SERVICE_NAME
           valueFrom:
             secretKeyRef:
               name: dotenv
-              key: aws-auth-proxy-upstream-scheme
-        - name: AWS_AUTH_PROXY_LISTEN_ADDRESS
-          value: ":9200"
-        - name: AWS_AUTH_PROXY_ACCESS_KEY
+              key: aws-sign-proxy-service-name
+        - name: AWS_SIGN_PROXY_UPSTREAM_HOST
           valueFrom:
             secretKeyRef:
               name: dotenv
-              key: aws-auth-proxy-access-key
-        - name: AWS_AUTH_PROXY_SECRET_KEY
-          valueFrom:
-            secretKeyRef:
-              name: dotenv
-              key: aws-auth-proxy-secret-key
+              key: aws-sign-proxy-upstream-host
       - image: quay.io/dtan4/nginx-basic-auth-proxy
         name: nginx-basic-auth-proxy
         ports:
@@ -73,7 +66,7 @@ spec:
               name: dotenv
               key: basic-auth-password
         - name: PROXY_PASS
-          value: http://localhost:9200/
+          value: http://localhost:8080/
         - name: SERVER_NAME
           valueFrom:
             secretKeyRef:

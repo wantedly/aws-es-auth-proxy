@@ -11,7 +11,7 @@ This proxy enables you to:
 ## Components
 
 - Basic Auth Proxy: [dtan4/nginx-basic-auth-proxy](https://github.com/dtan4/nginx-basic-auth-proxy)
-- Sign Proxy: [coreos/aws-auth-proxy](https://github.com/coreos/aws-auth-proxy)
+- Sign Proxy: [dtan4/aws-sign-proxy](https://github.com/dtan4/aws-sign-proxy)
 
 ```
    User
@@ -36,7 +36,7 @@ This proxy enables you to:
 |   |                               |
 |   v                               |
 | +----------------+                |
-| | aws-auth-proxy |                |
+| | aws-sign-proxy |                |
 | +----------------+                |
 |   |                Kubernetes Pod |
 +---|-------------------------------+
