@@ -14,33 +14,36 @@ This proxy enables you to:
 - Sign Proxy: [coreos/aws-auth-proxy](https://github.com/coreos/aws-auth-proxy)
 
 ```
-User
- |
- | GET http://user:pass@example.com/_plugin/kibana
- |
- v
+   User
+    |
+    | GET http://user:pass@example.com/_plugin/kibana
+    |
+    v
 +-------------------------------+
 | Kubernetes service (ELB, ...) |
 +-------------------------------+
- |
- | GET /_plugin/kibana
- |   with user:pass
- |
- v
-+------------------------+
-| nginx-basic-auth-proxy |
-+------------------------+
- |
- | GET /_plugin/kibana
- |
- v
-+----------------+
-| aws-auth-proxy |
-+----------------+
- |
- | GET https://search-xxx.ap-northeast-1.es.amazonaws.com/_plugin/kibana
- |   with signature
- |
- v
-Amazon ES (Kibana)
+    |
+    | GET /_plugin/kibana
+    |   with user:pass
+    |
++---|-------------------------------+
+|   v                               |
+| +------------------------+        |
+| | nginx-basic-auth-proxy |        |
+| +------------------------+        |
+|   |                               |
+|   | GET /_plugin/kibana           |
+|   |                               |
+|   v                               |
+| +----------------+                |
+| | aws-auth-proxy |                |
+| +----------------+                |
+|   |                Kubernetes Pod |
++---|-------------------------------+
+    |
+    | GET https://search-xxx.ap-northeast-1.es.amazonaws.com/_plugin/kibana
+    |   with signature
+    |
+    v
+   Amazon ES (Kibana)
 ```
