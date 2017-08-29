@@ -69,7 +69,7 @@ kubectl create -f kubernetes/deployment.yaml
 |`aws-signing-proxy`|`AWS_SECRET_ACCESS_KEY`|AWS secret access key|
 |`aws-signing-proxy`|`AWS_REGION`|AWS region|
 |`aws-signing-proxy`|`AWS_SIGN_PROXY_SERVICE_NAME`|AWS service name (e.g., `es` for Amazon ES)|
-|`aws-signing-proxy`|`AWS_SIGN_PROXY_UPSTREAM_HOST`|Upstream endpoint (e.g., `search-foobar-fae9r7u324rhq43hfw89efhwef.ap-northeast-1.es.amazonaws.com` for Amazon ES)|
+|`aws-signing-proxy`|`AWS_SIGN_PROXY_UPSTREAM_HOST`|Upstream endpoint (e.g., `search-xxx.ap-northeast-1.es.amazonaws.com` for Amazon ES)|
 |`nginx-basic-auth-proxy`|`BASIC_AUTH_USERNAME`|Nginx basic auth username|
 |`nginx-basic-auth-proxy`|`BASIC_AUTH_PASSWORD`|Nginx basic auth password|
 |`nginx-basic-auth-proxy`|`SERVER_NAME`|Nginx server name|
