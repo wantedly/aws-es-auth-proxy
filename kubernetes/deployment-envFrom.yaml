@@ -1,0 +1,39 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: aws-es-auth-proxy
+  namespace: aws-es-auth-proxy
+  labels:
+    name: aws-es-auth-proxy
+    role: web
+spec:
+  minReadySeconds: 30
+  strategy:
+    type: RollingUpdate
+  replicas: 1
+  template:
+    metadata:
+      name: aws-es-auth-proxy
+      labels:
+        name: aws-es-auth-proxy
+        role: web
+    spec:
+      containers:
+      - image: quay.io/dtan4/aws-sign-proxy
+        name: aws-signing-proxy
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - secretRef:
+            name: aws-signing-proxy
+      - image: quay.io/dtan4/nginx-basic-auth-proxy
+        name: nginx-basic-auth-proxy
+        ports:
+        - containerPort: 80
+        env:
+        - name: PROXY_PASS
+          value: http://localhost:8080/
+        envFrom:
+        - secretRef:
+            name: nginx-basic-auth-proxy
